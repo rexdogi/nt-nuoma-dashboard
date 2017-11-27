@@ -1,5 +1,5 @@
 import React from 'react';
-import MiniAuthWrapper from 'components/MiniFormWrapper/index';
+import MiniAuthWrapper from 'components/AuthForm/index';
 import {Button, FormHelperText, TextField, withStyles, withTheme, withWidth} from "material-ui";
 import {connect} from "react-redux";
 import {bindActionCreators, compose} from "redux";

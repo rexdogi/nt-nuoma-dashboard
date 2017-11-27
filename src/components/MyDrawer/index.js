@@ -3,11 +3,13 @@ import {
     Divider, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText, withStyles,
     withTheme
 } from "material-ui";
-import {compose} from "redux";
+import {bindActionCreators, compose} from "redux";
 import classNames from 'classnames';
 import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import ChevronRightIcon from 'material-ui-icons/ChevronRight';
 import InboxIcon from 'material-ui-icons/Inbox';
+import {push} from 'react-router-redux';
+import {connect} from "react-redux";
 
 class MyDrawer extends React.Component {
 
@@ -29,25 +31,25 @@ class MyDrawer extends React.Component {
                     </div>
                     <Divider />
                     <List className={classes.list}>
-                        <ListItem button>
+                        <ListItem button onClick={() => this.props.push('/dashboard/home')}>
                             <ListItemIcon>
                                 <InboxIcon />
                             </ListItemIcon>
                             <ListItemText primary="Home" />
                         </ListItem>
 
-                        <ListItem button>
+                        <ListItem button onClick={() => this.props.push('/dashboard/cities')}>
                             <ListItemIcon>
                                 <InboxIcon />
                             </ListItemIcon>
-                            <ListItemText primary="Users" />
+                            <ListItemText primary="Cities" />
                         </ListItem>
 
-                        <ListItem button>
+                        <ListItem button onClick={() => this.props.push('/dashboard/settings')}>
                             <ListItemIcon>
                                 <InboxIcon />
                             </ListItemIcon>
-                            <ListItemText primary="WUT" />
+                            <ListItemText primary="Settings" />
                         </ListItem>
                     </List>
                     <Divider />
@@ -89,7 +91,18 @@ const styles = theme => ({
     },
 });
 
+function mapStateToProps(state) {
+    return {
+        errors: state.auth.errors
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({push}, dispatch)
+}
+
 export default compose(
     withStyles(styles, {name: 'MyDrawer'}),
+    connect(mapStateToProps, mapDispatchToProps),
     withTheme()
 )(MyDrawer)

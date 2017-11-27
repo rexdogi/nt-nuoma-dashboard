@@ -9,8 +9,17 @@ import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
 import classNames from 'classnames';
 
-
 const TopBar = (props) => {
+
+    const handleAuthButton = () => {
+        if(props.loggedIn) {
+            props.logout();
+            props.push('/')
+        } else {
+            props.push('/login');
+        }
+    };
+
     const {classes, loggedIn, drawerOpen, toggleDrawer} = props;
     return (
         <AppBar className={classNames(classes.appBar, drawerOpen && classes.appBarShift)}>
@@ -26,7 +35,7 @@ const TopBar = (props) => {
                 <Typography type="title" color="inherit" className={classes.flex}>
                     Dashboard
                 </Typography>
-                <Button color="contrast">
+                <Button onClick={handleAuthButton} color="contrast">
                     {loggedIn ? 'LOGOUT' : 'LOGIN'}
                 </Button>
             </Toolbar>

@@ -1,9 +1,12 @@
 import React from 'react';
+import {Typography} from "material-ui";
 
 export default class Home extends React.Component {
     render() {
         return (
-            <h1>Dashboard</h1>
+            <Typography type="display1" gutterBottom>
+                Dashboard
+            </Typography>
         );
     }
 }

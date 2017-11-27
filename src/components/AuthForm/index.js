@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Paper, withStyles} from 'material-ui';
 import {compose} from "redux";
 
-const MiniFormWrapper = (props) => {
+const AuthForm = (props) => {
     const {classes} = props;
     return (
         <Paper className={classes.wrapper}>
@@ -46,4 +46,4 @@ const styles = theme => ({
 
 export default compose(
     withStyles(styles, {name: 'Register'}),
-)(MiniFormWrapper)
+)(AuthForm)

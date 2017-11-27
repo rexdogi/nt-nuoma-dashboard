@@ -14,6 +14,8 @@ import rootReducer from 'redux/index';
 import thunk from 'redux-thunk';
 import {routerMiddleware} from "react-router-redux";
 import createHistory from 'history/createBrowserHistory'
+import {getAuthData} from "services/auth";
+import {SET_USER_OBJECT} from "redux/modules/auth";
 
 const history = createHistory();
 const router = routerMiddleware(history);
@@ -26,7 +28,7 @@ const store =  createStore(
 
 const PrivateRoute = ({component: Component, ...rest}) => (
     <Route {...rest} render={props => (
-        true === true ? (
+        store.getState().auth.loggedIn === true ? (
             <Component {...props}/>
         ) : (
             <Redirect to={{
@@ -40,6 +42,11 @@ const PrivateRoute = ({component: Component, ...rest}) => (
 class App extends React.Component {
 
     render() {
+        const tokenData = getAuthData();
+        console.log(tokenData);
+        if(tokenData.status === true) {
+            store.dispatch({type: SET_USER_OBJECT, payload: tokenData})
+        }
         return (
             <MuiThemeProvider theme={theme}>
                 <Provider store={store}>

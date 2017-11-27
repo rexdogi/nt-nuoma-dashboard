@@ -1,6 +1,6 @@
 import {get, post} from 'services/http';
 import {push} from 'react-router-redux';
-import decoder from 'jwt-decode';
+import {decode, getAuthData} from "services/auth";
 
 const LOGIN_STARTED = 'login/LOGIN_STARTED';
 const LOGIN_SUCCESS = 'login/LOGIN_SUCCESS';
@@ -8,12 +8,15 @@ const LOGIN_FAILED = 'login/LOGIN_FAILED';
 const REGISTER_STARTED = 'login/REGISTER_STARTED';
 const REGISTER_SUCCESS = 'login/REGISTER_SUCCESS';
 const REGISTER_FAILED = 'login/REGISTER_FAILED';
+export const SET_USER_OBJECT = 'login/SET_USER_OBJECT';
+export const LOGOUT = 'login/LOGOUT';
 
 const initialState = {
     isLoading: false,
     success: false,
-    loggedIn: true,
-    errors: []
+    loggedIn: false,
+    errors: [],
+    user: null
 };
 
 export default function reducer(state = initialState, action) {
@@ -30,6 +33,10 @@ export default function reducer(state = initialState, action) {
             return {...state, isLoading: false, success: true};
         case REGISTER_FAILED:
             return {...state, isLoading: false, errors: action.payload.errors};
+        case SET_USER_OBJECT:
+            return {...state, user: action.payload.user, loggedIn: action.payload.status};
+        case LOGOUT:
+            return {...state, loggedIn: false, user: null}
         default:
             return state;
     }
@@ -42,18 +49,21 @@ export function login(email, password) {
             email: email,
             password: password
         }).then((data) => {
-            console.log(data);
-            setToken(data.headers.authorization);
-            document.cookie = "id_token=" + data.headers.authorization;
+            const token = data.headers.authorization;
+            setToken(token);
+            document.cookie = "id_token=" + token;
             dispatch({type: LOGIN_SUCCESS});
+            dispatch({type: SET_USER_OBJECT, payload: getAuthData(token)});
             dispatch(push('/dashboard'))
         }).catch((err) => {
-            console.log(err.response);
-            dispatch({
-                type: LOGIN_FAILED, payload: {
-                    errors: err.response.data.errors
-                }
-            });
+            console.log(err)
+            if(err.response) {
+                dispatch({
+                    type: LOGIN_FAILED, payload: {
+                        errors: err.response.data.errors
+                    }
+                });
+            }
         })
     }
 }
@@ -67,32 +77,22 @@ export function register(email, password) {
         }).then(() => {
             dispatch({type: REGISTER_SUCCESS})
         }).catch((err) => {
-            console.log(err.response)
-            dispatch({
-                type: REGISTER_FAILED, payload: {
-                    errors: err.response.data.errors
-                }
-            });
+            if(err.response) {
+                dispatch({
+                    type: REGISTER_FAILED, payload: {
+                        errors: err.response.data.errors
+                    }
+                });
+            }
         })
     }
 }
 
-export function isLoggedIn() {
-    console.log(getToken());
-    /* const current_time = new Date().getTime() / 1000;
-     if (current_time > jwt.exp) {
-     }
-     else {
-
-     }*/
-}
-
 export function logout() {
-
-}
-
-function getToken() {
-    return localStorage.getItem('id_token')
+    localStorage.removeItem('id_token')
+    return {
+        type: LOGOUT
+    }
 }
 
 function setToken(idToken) {

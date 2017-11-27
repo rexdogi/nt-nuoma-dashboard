@@ -2,9 +2,14 @@ import React from 'react';
 import {Route, Switch} from "react-router-dom";
 import TopBar from 'components/TopBar/index';
 import MyDrawer from 'components/MyDrawer/index';
+import Settings from 'containers/Settings/index';
 import {withStyles, withWidth} from "material-ui";
 import {connect} from "react-redux";
-import {compose} from "redux";
+import {bindActionCreators, compose} from "redux";
+import {logout} from "redux/modules/auth";
+import {push} from 'react-router-redux';
+import Home from "containers/Home/index";
+import Cities from 'containers/Cities/index';
 
 class BaseLayout extends React.Component {
 
@@ -27,12 +32,19 @@ class BaseLayout extends React.Component {
         return (
             <div className={classes.root}>
                 <div className={classes.appFrame}>
-                    <TopBar toggleDrawer={this.toggleDrawer} drawerOpen={this.state.drawerOpen}
-                            loggedIn={this.props.loggedIn}/>
+                    <TopBar
+                        toggleDrawer={this.toggleDrawer}
+                        drawerOpen={this.state.drawerOpen}
+                        loggedIn={this.props.loggedIn}
+                        logout={this.props.logout}
+                        push={this.props.push}
+                    />
                     <MyDrawer toggleDrawer={this.toggleDrawer} drawerOpen={this.state.drawerOpen}/>
                     <div className={classes.content}>
+                        <Route path='/dashboard/home' component={Home}/>
                         <Switch>
-                            <Route path='/dashboard/kek' component={() => (<div>kek</div>)}/>
+                            <Route path='/dashboard/cities' component={Cities}/>
+                            <Route path='/dashboard/settings' component={Settings}/>
                         </Switch>
                     </div>
                 </div>
@@ -75,10 +87,14 @@ function mapStateToProps(state) {
     }
 }
 
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({logout, push}, dispatch)
+}
+
 export default compose(
     withStyles(styles, {
         name: 'BaseLayout'
     }),
     withWidth(),
-    connect(mapStateToProps)
+    connect(mapStateToProps, mapDispatchToProps)
 )(BaseLayout)
