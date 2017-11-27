@@ -1,15 +1,13 @@
 import React from 'react';
 import {Route, Switch} from "react-router-dom";
 import TopBar from 'components/TopBar/index';
-import MyDrawer from 'components/MyDrawer/index';
-import Settings from 'containers/Settings/index';
+import {MyDrawer} from 'components';
+import {Settings, Cities, Home} from 'containers';
 import {withStyles, withWidth} from "material-ui";
 import {connect} from "react-redux";
 import {bindActionCreators, compose} from "redux";
 import {logout} from "redux/modules/auth";
 import {push} from 'react-router-redux';
-import Home from "containers/Home/index";
-import Cities from 'containers/Cities/index';
 
 class BaseLayout extends React.Component {
 
@@ -27,7 +25,7 @@ class BaseLayout extends React.Component {
     }
 
     render() {
-        const {classes} = this.props;
+        const {classes, match} = this.props;
 
         return (
             <div className={classes.root}>
@@ -41,10 +39,10 @@ class BaseLayout extends React.Component {
                     />
                     <MyDrawer toggleDrawer={this.toggleDrawer} drawerOpen={this.state.drawerOpen}/>
                     <div className={classes.content}>
-                        <Route path='/dashboard/home' component={Home}/>
                         <Switch>
-                            <Route path='/dashboard/cities' component={Cities}/>
-                            <Route path='/dashboard/settings' component={Settings}/>
+                            <Route exact path={`${match.url}/`} component={Home}/>
+                            <Route path={`${match.url}/cities`} component={Cities}/>
+                            <Route path={`${match.url}/settings`} component={Settings}/>
                         </Switch>
                     </div>
                 </div>

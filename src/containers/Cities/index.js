@@ -2,17 +2,12 @@ import React from 'react';
 import {Button, Paper, Typography, withStyles, withTheme} from "material-ui";
 import {connect} from "react-redux";
 import {bindActionCreators, compose} from "redux";
-import MyTable from 'components/MyTable/index';
-import Module from 'components/Module/index';
-import ModuleHeader from 'components/ModuleHeader/index';
-import Left from 'components/Left/index';
-import Right from 'components/Right/index';
+import {Right, Left, MyTable, Module, ModuleHeader} from 'components/index';
 
 class Cities extends React.Component {
 
     render() {
-        const {classes, errors} = this.props;
-
+        const {classes, match} = this.props;
 
         const columns = [
             {id: 'id', label: 'Id', numeric: true, disablePadding: true},

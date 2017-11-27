@@ -9,7 +9,7 @@ const REGISTER_STARTED = 'login/REGISTER_STARTED';
 const REGISTER_SUCCESS = 'login/REGISTER_SUCCESS';
 const REGISTER_FAILED = 'login/REGISTER_FAILED';
 export const SET_USER_OBJECT = 'login/SET_USER_OBJECT';
-export const LOGOUT = 'login/LOGOUT';
+const LOGOUT = 'login/LOGOUT';
 
 const initialState = {
     isLoading: false,
@@ -98,30 +98,3 @@ export function logout() {
 function setToken(idToken) {
     localStorage.setItem('id_token', idToken)
 }
-
-/*
-setProfile(profile){
-    // Saves profile data to localStorage
-    localStorage.setItem('profile', JSON.stringify(profile))
-}
-
-getProfile(){
-    // Retrieves the profile data from localStorage
-    const profile = localStorage.getItem('profile')
-    return profile ? JSON.parse(localStorage.profile) : {}
-}
-
-setToken(idToken){
-    // Saves user token to localStorage
-    localStorage.setItem('id_token', idToken)
-}
-
-getToken(){
-    return localStorage.getItem('id_token')
-}
-
-logout(){
-    // Clear user token and profile data from localStorage
-    localStorage.removeItem('id_token');
-    localStorage.removeItem('profile');
-}*/

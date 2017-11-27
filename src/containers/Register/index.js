@@ -1,10 +1,10 @@
 import React from 'react';
-import MiniAuthWrapper from 'components/AuthForm/index';
 import {Button, FormHelperText, TextField, withStyles, withTheme, withWidth} from "material-ui";
 import {connect} from "react-redux";
 import {bindActionCreators, compose} from "redux";
 import {register} from "redux/modules/auth";
-import MyTextField from 'components/MyTextField/index';
+import {MyTextField} from 'components';
+import {AuthForm} from 'components';
 
 class Register extends React.Component {
 
@@ -26,7 +26,7 @@ class Register extends React.Component {
         const {classes, errors} = this.props;
 
         return (
-            <MiniAuthWrapper>
+            <AuthForm>
                 <form>
                     <MyTextField
                         errors={errors}
@@ -76,7 +76,7 @@ class Register extends React.Component {
                     </Button>
 
                 </form>
-            </MiniAuthWrapper>
+            </AuthForm>
         );
     }
 }

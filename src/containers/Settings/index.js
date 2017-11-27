@@ -1,5 +1,5 @@
 import React from 'react';
-import { Paper, withStyles, withTheme, withWidth} from "material-ui";
+import { Paper, withStyles, withTheme} from "material-ui";
 import {connect} from "react-redux";
 import {bindActionCreators, compose} from "redux";
 

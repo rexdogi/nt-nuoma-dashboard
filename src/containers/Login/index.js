@@ -1,6 +1,6 @@
 import React from 'react';
-import MiniAuthWrapper from 'components/AuthForm/index';
-import {Button, FormHelperText, TextField, withStyles, withTheme, withWidth} from "material-ui";
+import {AuthForm} from 'components';
+import {Button, TextField, withStyles, withTheme, withWidth} from "material-ui";
 import {connect} from "react-redux";
 import {bindActionCreators, compose} from "redux";
 import {login} from "redux/modules/auth";
@@ -24,7 +24,7 @@ class Login extends React.Component {
         const {classes} = this.props;
 
         return (
-            <MiniAuthWrapper>
+            <AuthForm>
                 <form>
                     <TextField
                         field="email"
@@ -54,7 +54,7 @@ class Login extends React.Component {
                         Login
                     </Button>
                 </form>
-            </MiniAuthWrapper>
+            </AuthForm>
         );
     }
 }

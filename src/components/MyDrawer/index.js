@@ -31,7 +31,7 @@ class MyDrawer extends React.Component {
                     </div>
                     <Divider />
                     <List className={classes.list}>
-                        <ListItem button onClick={() => this.props.push('/dashboard/home')}>
+                        <ListItem button onClick={() => this.props.push('/dashboard/')}>
                             <ListItemIcon>
                                 <InboxIcon />
                             </ListItemIcon>
