@@ -13,11 +13,10 @@ class Cities extends React.Component {
     }
 
     render() {
-        const {classes, match, failed, success, loading} = this.props;
+        const {classes, match, cities, failed, success, loading} = this.props;
 
         const columns = [
             {id: 'id', label: 'Id', numeric: true, disablePadding: true},
-            {id: 'name', label: 'Name', numeric: false, disablePadding: false},
             {id: 'name', label: 'Name', numeric: false, disablePadding: false},
         ];
 
@@ -44,7 +43,7 @@ class Cities extends React.Component {
                 </ModuleHeader>
                 <Divider />
                 <ModuleContent>
-                    <MyTable rowData={rows} columnData={columns}/>
+                    <MyTable rowData={cities} columnData={columns}/>
                 </ModuleContent>
                 <MyProgressBar failed={failed} loading={loading} success={success}/>
             </Module>
@@ -63,6 +62,7 @@ function mapStateToProps(state) {
         loading: state.city.loading,
         completed: state.city.success,
         failed: state.city.failed,
+        cities: state.city.cities
     }
 }
 

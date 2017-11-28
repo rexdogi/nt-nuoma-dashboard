@@ -2,9 +2,12 @@ import {createAsyncConst} from "services/redux";
 import {API_DELETE, API_GET, API_POST, API_UPDATE} from "../constants";
 
 const RESET = 'city/RESET';
+
+const CREATE_CITY = createAsyncConst('CREATE_CITY');
 const GET_CITY = createAsyncConst('GET_CITY');
 const GET_CITIES = createAsyncConst('GET_CITIES');
 const CITIES = createAsyncConst('CITIES');
+const DEFAULT_ASYNC = createAsyncConst('CITY_DEFAULT_ASYNC');
 
 const initialState = {
     cities: [],
@@ -17,25 +20,22 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
     switch (action.type) {
-        case GET_CITIES.PENDING:
-            return {...state, loading: false, success: false};
+
         case GET_CITIES.SUCCESS:
-            return {...state, loading: false, success: true, cities: action.data.data};
-        case GET_CITIES.FAILED:
-            return {...state, loading: false, failed: true};
-
-        case GET_CITY.PENDING:
-            return {...state, loading: false, success: false};
+            return {...state, cities: action.data.data};
         case GET_CITY.SUCCESS:
-            return {...state, loading: false, success: true, city: action.data.data};
-        case GET_CITY.FAILED:
-            return {...state, loading: false, failed: true};
+            return {...state, city: action.data.data};
 
-        case CITIES.PENDING:
-            return {...state, loading: false, success: false};
-        case CITIES.SUCCESS:
+        case CREATE_CITY.SUCCESS:
+            return {...state, city: action.data.data};
+        case CREATE_CITY.FAILED:
+            return {...state};
+
+        case DEFAULT_ASYNC.PENDING:
+            return {...state, loading: true, success: false};
+        case DEFAULT_ASYNC.SUCCESS:
             return {...state, loading: false, success: true};
-        case CITIES.FAILED:
+        case DEFAULT_ASYNC.FAILED:
             return {...state, loading: false, failed: true};
 
         case RESET:
@@ -48,20 +48,23 @@ export default function reducer(state = initialState, action) {
 export const getCities = () => ({
     type: API_GET,
     url: `/city`,
-    next: GET_CITIES
+    next: GET_CITIES,
+    default: DEFAULT_ASYNC
 });
 
 export const storeCity = (name) => ({
     type: API_POST,
     url: `/city`,
     data: {name},
-    next: CITIES
+    next: CITIES,
+    default: DEFAULT_ASYNC
 });
 
 export const editCity = (id) => ({
     type: API_GET,
     url: `/city/${id}`,
-    next: GET_CITY
+    next: GET_CITY,
+    default: DEFAULT_ASYNC
 });
 
 export const updateCity = (id, name) => ({
@@ -78,5 +81,5 @@ export const destroyCity = (id) => ({
 });
 
 export const reset = () => ({
-   type: RESET
+    type: RESET
 });
