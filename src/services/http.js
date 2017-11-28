@@ -1,6 +1,8 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
+
+    withCredentials: true,
     headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
@@ -8,6 +10,7 @@ const axiosInstance = axios.create({
         'Content-Type': 'application/json',
     }
 });
+axios.defaults.headers.common['Authorization'] = localStorage.getItem('id_token');
 
 const REMOTE_ENDPOINT = 'http://108.59.80.189:8080';
 const LOCAL_ENDPOINT = 'http://localhost:8080';

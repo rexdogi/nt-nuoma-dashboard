@@ -2,10 +2,8 @@ import {
     Route, Switch, Redirect
 } from 'react-router';
 import * as React from "react";
-import BaseLayout from "./containers/BaseLayout/index";
 import {Provider} from 'react-redux'
-import Login from "containers/Login/index";
-import Register from "containers/Register/index";
+import {Login, Register, BaseLayout} from "containers";
 import theme from './theme';
 import {MuiThemeProvider} from "material-ui";
 import {ConnectedRouter} from 'react-router-redux'
@@ -16,6 +14,7 @@ import {routerMiddleware} from "react-router-redux";
 import createHistory from 'history/createBrowserHistory'
 import {getAuthData} from "services/auth";
 import {SET_USER_OBJECT} from "redux/modules/auth";
+import APIMiddleware from 'redux/middlewares/APIMiddleware';
 
 const history = createHistory();
 const router = routerMiddleware(history);
@@ -23,7 +22,7 @@ const router = routerMiddleware(history);
 const store =  createStore(
     rootReducer,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-    applyMiddleware(thunk, router)
+    applyMiddleware(thunk, router, APIMiddleware)
 );
 
 const PrivateRoute = ({component: Component, ...rest}) => (
@@ -42,8 +41,7 @@ const PrivateRoute = ({component: Component, ...rest}) => (
 class App extends React.Component {
 
     render() {
-        const tokenData = getAuthData();
-        console.log(tokenData);
+        const tokenData = getAuthData();;
         if(tokenData.status === true) {
             store.dispatch({type: SET_USER_OBJECT, payload: tokenData})
         }

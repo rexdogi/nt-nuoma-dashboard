@@ -2,7 +2,7 @@ import React from 'react';
 import {Route, Switch} from "react-router-dom";
 import TopBar from 'components/TopBar/index';
 import {MyDrawer} from 'components';
-import {Settings, Cities, Home} from 'containers';
+import {Settings, Cities, Home, CitiesManage} from 'containers';
 import {withStyles, withWidth} from "material-ui";
 import {connect} from "react-redux";
 import {bindActionCreators, compose} from "redux";
@@ -41,7 +41,9 @@ class BaseLayout extends React.Component {
                     <div className={classes.content}>
                         <Switch>
                             <Route exact path={`${match.url}/`} component={Home}/>
-                            <Route path={`${match.url}/cities`} component={Cities}/>
+                            <Route exact path={`${match.url}/cities`} component={Cities}/>
+                            <Route exact path={`${match.url}/cities/create`} component={CitiesManage}/>
+                            <Route exact path={`${match.url}/cities/:id`} component={CitiesManage}/>
                             <Route path={`${match.url}/settings`} component={Settings}/>
                         </Switch>
                     </div>

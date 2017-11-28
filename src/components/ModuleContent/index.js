@@ -1,21 +1,21 @@
 import React from 'react';
 import {withStyles} from 'material-ui/styles';
-import {Paper} from "material-ui";
 
 const styles = theme => ({
     root: {
+
     }
 });
 
-const Module = (props) => {
+const ModuleContent = (props) => {
     const {children, classes} = props;
 
     return (
-        <Paper className={classes.root}>
-            {children}
-        </Paper>
+      <div className={classes.root}>
+          {children}
+      </div>
     );
 };
 
 
-export default withStyles(styles)(Module);
+export default withStyles(styles)(ModuleContent);

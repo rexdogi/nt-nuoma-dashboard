@@ -3,7 +3,7 @@ import {withStyles} from 'material-ui/styles';
 
 const styles = theme => ({
     root: {
-        float: 'left'
+        display: 'inline'
     }
 });
 
@@ -11,9 +11,9 @@ const Left = (props) => {
     const {children, classes} = props;
 
     return (
-        <span className={classes.root}>
+        <div className={classes.root}>
             {children}
-        </span>
+        </div>
     );
 };
 
