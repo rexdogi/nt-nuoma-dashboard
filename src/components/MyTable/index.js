@@ -5,10 +5,13 @@ import Table, {TableBody, TableCell, TableHead, TableRow} from 'material-ui/Tabl
 
 const styles = theme => ({
     table: {},
+    tableRowCell: {
+        cursor: 'pointer'
+    }
 });
 
 const MyTable = (props) => {
-    const {classes, columnData = [], rowData = []} = props;
+    const {classes, columnData = [], rowData = [], onRowClicked} = props;
 
     const columnCells = columnData.map((col, i) => (
         <TableCell
@@ -19,11 +22,13 @@ const MyTable = (props) => {
         </TableCell>
     ));
 
-    const rowCells = (row) => {
+    const rowCells = (row, index) => {
         return columnData.map((col, i) => (
             <TableCell
+                className={classes.tableRowCell}
                 key={i}
                 numeric={col.numeric}
+                onClick={() => onRowClicked(row, index)}
             >
                 {row[col.id]}
             </TableCell>
@@ -38,10 +43,10 @@ const MyTable = (props) => {
                 </TableRow>
             </TableHead>
             <TableBody>
-                {rowData.map(row => {
+                {rowData.map((row, index) => {
                     return (
                         <TableRow key={row.id}>
-                            {rowCells(row)}
+                            {rowCells(row, index)}
                         </TableRow>
                     );
                 })}

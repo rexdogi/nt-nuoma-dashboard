@@ -1,4 +1,4 @@
-export const API_GET = 'redux/API_GET';
-export const API_POST = 'redux/API_POST';
-export const API_UPDATE = 'redux/API_UPDATE';
-export const API_DELETE= 'redux/API_DELETE';
+export const API_GET = 'get';
+export const API_POST = 'post';
+export const API_UPDATE = 'put';
+export const API_DELETE= 'delete';

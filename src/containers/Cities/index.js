@@ -4,12 +4,22 @@ import {connect} from "react-redux";
 import {bindActionCreators, compose} from "redux";
 import {Right, Left, MyTable, Module, ModuleHeader, ModuleContent, MyProgressBar} from 'components/index';
 import {push} from 'react-router-redux';
-import {getCities} from "redux/modules/city";
+import {getCities} from "redux/modules/city/index";
 
 class Cities extends React.Component {
 
+    constructor(props) {
+        super(props);
+    }
+
     componentDidMount() {
         this.props.getCities();
+        this.handleRowClick = this.handleRowClick.bind(this);
+    }
+
+    handleRowClick(row, index) {
+        const {match} = this.props;
+        this.props.push(`${match.url}/${row.id}`);
     }
 
     render() {
@@ -18,11 +28,6 @@ class Cities extends React.Component {
         const columns = [
             {id: 'id', label: 'Id', numeric: true, disablePadding: true},
             {id: 'name', label: 'Name', numeric: false, disablePadding: false},
-        ];
-
-        const rows = [
-            {id: 1, name: 'Xd'},
-            {id: 2, name: 'lil'}
         ];
 
         return (
@@ -43,7 +48,11 @@ class Cities extends React.Component {
                 </ModuleHeader>
                 <Divider />
                 <ModuleContent>
-                    <MyTable rowData={cities} columnData={columns}/>
+                    <MyTable
+                        onRowClicked={this.handleRowClick}
+                        rowData={cities}
+                        columnData={columns}
+                    />
                 </ModuleContent>
                 <MyProgressBar failed={failed} loading={loading} success={success}/>
             </Module>
@@ -59,9 +68,9 @@ const styles = theme => ({
 
 function mapStateToProps(state) {
     return {
-        loading: state.city.loading,
-        completed: state.city.success,
-        failed: state.city.failed,
+        loading: state.city.indexLoading,
+        completed: state.city.indexSuccess,
+        failed: state.city.indexFailed,
         cities: state.city.cities
     }
 }

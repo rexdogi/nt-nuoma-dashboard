@@ -3,28 +3,32 @@ import {Button, Divider, LinearProgress, Paper, Typography, withStyles, withThem
 import {connect} from "react-redux";
 import {bindActionCreators, compose} from "redux";
 import {Right, Left, ModuleFooter, Module, ModuleHeader, ModuleContent, MyTextField, MyProgressBar} from 'components/index';
-import {storeCity, reset} from "redux/modules/city";
+import {storeCity, reset, setField, editCity, updateCity} from "redux/modules/city/index";
 
 class CitiesManage extends React.Component {
 
     componentDidMount() {
-        this.props.reset();
+        const {match, reset, editCity} = this.props;
+        reset();
+        if(match.params.id) {
+            editCity(match.params.id);
+        }
     }
 
-    state = {
-        city: ''
-    };
 
     handleChange = name => event => {
-        this.setState({[name]: event.target.value})
+        this.props.setField(event.target.value, name);
     };
 
-    handleCreate = () => {
-        this.props.storeCity(this.state.city)
+    handleSubmit = () => {
+        const {city, match, storeCity, updateCity} = this.props;
+        match.params.id
+            ? updateCity(...city)
+            : storeCity(...city);
     };
 
     render() {
-        const {classes, match, errors, failed, success, loading} = this.props;
+        const {classes, match, errors, failed, success, loading, city} = this.props;
         return (
             <Module>
                 <ModuleHeader>
@@ -41,9 +45,9 @@ class CitiesManage extends React.Component {
                             errorPrefix={true}
                             field="city"
                             label="City"
-                            value={this.state.city}
+                            value={city.name}
                             margin="normal"
-                            onChange={this.handleChange('city')}
+                            onChange={this.handleChange('name')}
                         />
                     </div>
                 </ModuleContent>
@@ -52,9 +56,9 @@ class CitiesManage extends React.Component {
                         disabled={loading}
                         color="primary"
                         raised
-                        onClick={this.handleCreate}
+                        onClick={this.handleSubmit}
                     >
-                        Create
+                        {match.params.id ? 'Update' : 'Create'}
                     </Button>
                     <Right>
                         {match.params.id &&
@@ -81,14 +85,15 @@ const styles = theme => ({
 function mapStateToProps(state) {
     return {
         errors: state.city.errors,
-        loading: state.city.loading,
-        success: state.city.success,
-        failed: state.city.failed,
+        loading: state.city.manageLoading,
+        success: state.city.manageSuccess,
+        failed: state.city.manageFailed,
+        city: state.city.city
     }
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({storeCity, reset}, dispatch)
+    return bindActionCreators({storeCity, reset, setField, editCity, updateCity}, dispatch)
 }
 
 export default compose(

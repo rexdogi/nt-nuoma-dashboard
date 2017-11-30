@@ -20,7 +20,7 @@ const styles = theme => ({
     }
 });
 
-const ModuleFooter = (props) => {
+const MyProgressBar = (props) => {
     const {classes, loading = false, success = false, failed = false} = props;
 
     return (
@@ -33,11 +33,11 @@ const ModuleFooter = (props) => {
             <div className={classes.successBar}/>
             }
 
-            {loading && !success && failed &&
+            {!loading && !success && failed &&
             <div className={classes.errorBar}/>
             }
         </div>
     );
 };
 
-export default withStyles(styles)(ModuleFooter);
+export default withStyles(styles)(MyProgressBar);
