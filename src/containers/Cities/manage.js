@@ -9,7 +9,7 @@ class CitiesManage extends React.Component {
 
     componentDidMount() {
         const {match, reset, editCity} = this.props;
-        reset();
+
         if(match.params.id) {
             editCity(match.params.id);
         }
@@ -22,9 +22,9 @@ class CitiesManage extends React.Component {
 
     handleSubmit = () => {
         const {city, match, storeCity, updateCity} = this.props;
-        match.params.id
-            ? updateCity(...city)
-            : storeCity(...city);
+        if(match.params.id) {
+            updateCity(...city)
+        }
     };
 
     render() {

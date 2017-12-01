@@ -1,4 +1,4 @@
-import {API_GET, API_POST, API_UPDATE, API_DELETE} from "redux/constants";
+import {AUTH_REGISTER, AUTH_LOGIN} from "redux/constants";
 import * as http from "services/http";
 
 const pending = (prefix) => ({
@@ -17,15 +17,11 @@ const failed = (prefix) => ({
     [`${prefix}Failed`]: true
 });
 
-
 const apiMiddleware = ({dispatch, getState}) => next => action => {
 
     switch (action.type) {
-        case API_GET:
-        case API_POST:
-        case API_UPDATE:
-        case API_DELETE:
-        const {url, data = {}, headers = {}} = action.payload;
+        case AUTH_REGISTER:
+            const {url, data = {}, headers = {}} = action.payload;
             dispatch({type: action.next.PENDING, asyncStatus: pending(action.module)});
             http[action.type](url, data, headers)
                 .then(
@@ -41,7 +37,5 @@ const apiMiddleware = ({dispatch, getState}) => next => action => {
 
     next(action);
 };
-
-
 
 export default apiMiddleware;

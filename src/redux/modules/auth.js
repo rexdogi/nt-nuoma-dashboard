@@ -1,6 +1,10 @@
 import {get, post} from 'services/http';
 import {push} from 'react-router-redux';
 import {decode, getAuthData} from "services/auth";
+import {createAsyncConst} from "services/redux";
+
+const LOGIN = createAsyncConst('LOGIN');
+const REGISTER = createAsyncConst('REGISTER');
 
 const LOGIN_STARTED = 'login/LOGIN_STARTED';
 const LOGIN_SUCCESS = 'login/LOGIN_SUCCESS';
@@ -12,8 +16,13 @@ export const SET_USER_OBJECT = 'login/SET_USER_OBJECT';
 const LOGOUT = 'login/LOGOUT';
 
 const initialState = {
-    isLoading: false,
-    success: false,
+    registerPending: false,
+    registerSuccess: false,
+    registerFailed: false,
+    loginPending: false,
+    loginSuccess: false,
+    loginFailed: false,
+
     loggedIn: false,
     errors: [],
     user: null
@@ -21,18 +30,18 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
     switch (action.type) {
-        case LOGIN_STARTED:
-            return {...state, isLoading: true, success: false, errors: []};
-        case LOGIN_SUCCESS:
-            return {...state, isLoading: false, success: true};
-        case LOGIN_FAILED:
-            return {...state, isLoading: false, errors: action.payload.errors};
-        case REGISTER_STARTED:
-            return {...state, isLoading: true, success: false, errors: []};
-        case REGISTER_SUCCESS:
-            return {...state, isLoading: false, success: true};
-        case REGISTER_FAILED:
-            return {...state, isLoading: false, errors: action.payload.errors};
+        case LOGIN.PENDING:
+            return {...state, ...action.asyncStatus, errors: []};
+        case LOGIN.SUCCESS:
+            return {...state, ...action.asyncStatus};
+        case LOGIN.FAILED:
+            return {...state, ...action.asyncStatus, errors: action.payload.errors};
+        case REGISTER.PENDING:
+            return {...state, ...action.asyncStatus, errors: []};
+        case REGISTER.SUCCESS:
+            return {...state, ...action.asyncStatus};
+        case REGISTER.FAILED:
+            return {...state, ...action.asyncStatus, errors: action.payload.errors};
         case SET_USER_OBJECT:
             return {...state, user: action.payload.user, loggedIn: action.payload.status};
         case LOGOUT:

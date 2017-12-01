@@ -31,14 +31,14 @@ export default function reducer(state = initialState, action) {
             return {...state, manageLoading: true};
         case EDIT_CITY.SUCCESS:
             return {...state, manageLoading: false, city: action.data.data};
-        case EDIT_CITY.ERROR:
+        case EDIT_CITY.FAILED:
             return {...state, ...action.asyncStatus};
 
         case GET_CITIES.PENDING:
             return {...state, ...action.asyncStatus};
         case GET_CITIES.SUCCESS:
-            return {...state, ...action.asyncStatus, cities: action.data.data};
-        case GET_CITIES.ERROR:
+            return {...state, indexLoading: false, cities: action.data.data};
+        case GET_CITIES.FAILED:
             return {...state, ...action.asyncStatus};
 
         case CREATE_CITY.SUCCESS:
@@ -77,7 +77,7 @@ export const storeCity = (name) => ({
         url: `/city`,
         data: {name},
     },
-    next: CITIES,
+    next: CREATE_CITY,
     module: 'manage'
 });
 
@@ -92,8 +92,10 @@ export const editCity = (id) => ({
 
 export const updateCity = (id, name) => ({
     type: API_UPDATE,
-    url: `/city`,
-    data: {id, name},
+    payload: {
+        url: `/city`,
+        data: {id, name},
+    },
     next: UPDATE_CITY,
     module: 'manage'
 });

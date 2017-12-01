@@ -20,24 +20,45 @@ const styles = theme => ({
     }
 });
 
-const MyProgressBar = (props) => {
-    const {classes, loading = false, success = false, failed = false} = props;
+class MyProgressBar extends React.Component {
 
-    return (
-        <div className={classes.root}>
-            {loading &&
-            <LinearProgress/>
-            }
+  /*  state = {
+        delay: false
+    };
 
-            {!loading && success &&
-            <div className={classes.successBar}/>
-            }
+    componentWillReceiveProps(props) {
+        const {loading, failed} = props;
+        this.setState({delay: true});
 
-            {!loading && !success && failed &&
-            <div className={classes.errorBar}/>
-            }
-        </div>
-    );
+        if(!loading || failed) {
+            setTimeout(() => {
+                this.setState({delay: false})
+            }, 300)
+        } else {
+            this.setState({delay: false})
+        }
+    }*/
+
+    render() {
+        const {classes, loading = false, success = false, failed = false} = this.props;
+
+        return (
+            <div className={classes.root}>
+                {loading &&
+                <LinearProgress/>
+                }
+
+                {!loading && success &&
+                <div className={classes.successBar}/>
+                }
+
+                {!loading && !success && failed &&
+                <div className={classes.errorBar}/>
+                }
+            </div>
+        );
+    }
+
 };
 
 export default withStyles(styles)(MyProgressBar);

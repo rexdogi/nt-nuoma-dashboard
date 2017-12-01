@@ -69,7 +69,7 @@ const styles = theme => ({
 function mapStateToProps(state) {
     return {
         loading: state.city.indexLoading,
-        completed: state.city.indexSuccess,
+        success: state.city.indexSuccess,
         failed: state.city.indexFailed,
         cities: state.city.cities
     }

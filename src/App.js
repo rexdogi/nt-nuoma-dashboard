@@ -14,7 +14,7 @@ import {routerMiddleware} from "react-router-redux";
 import createHistory from 'history/createBrowserHistory'
 import {getAuthData} from "services/auth";
 import {SET_USER_OBJECT} from "redux/modules/auth";
-import APIMiddleware from 'redux/middlewares/APIMiddleware';
+import AsyncMiddleware from 'redux/middlewares/AsyncMiddleware';
 
 const history = createHistory();
 const router = routerMiddleware(history);
@@ -22,7 +22,7 @@ const router = routerMiddleware(history);
 const store =  createStore(
     rootReducer,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-    applyMiddleware(thunk, router, APIMiddleware)
+    applyMiddleware(thunk, router, AsyncMiddleware)
 );
 
 const PrivateRoute = ({component: Component, ...rest}) => (

@@ -1,11 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-
-    withCredentials: true,
     headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
         'Accept': 'application/json',
         'Content-Type': 'application/json',
     }
