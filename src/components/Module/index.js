@@ -1,6 +1,7 @@
 import React from 'react';
 import {withStyles} from 'material-ui/styles';
 import {Paper} from "material-ui";
+import classNames from 'classnames';
 
 const styles = theme => ({
     root: {
@@ -8,10 +9,10 @@ const styles = theme => ({
 });
 
 const Module = (props) => {
-    const {children, classes} = props;
+    const {children, classes, style} = props;
 
     return (
-        <Paper className={classes.root}>
+        <Paper style={style} className={classNames(classes.root)}>
             {children}
         </Paper>
     );

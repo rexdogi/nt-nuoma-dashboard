@@ -2,18 +2,29 @@ import React from 'react';
 import {Route, Switch} from "react-router-dom";
 import TopBar from 'components/TopBar/index';
 import {MyDrawer} from 'components';
-import {Settings, Cities, Home, CitiesManage} from 'containers';
+import {
+    Settings,
+    Cities,
+    Home,
+    CitiesManage,
+    Users,
+    UsersManage,
+    Properties,
+    PropertiesManage
+} from 'containers';
 import {withStyles, withWidth} from "material-ui";
 import {connect} from "react-redux";
 import {bindActionCreators, compose} from "redux";
-import {logout} from "redux/modules/auth";
+import {logout} from "redux/modules/auth/index";
 import {push} from 'react-router-redux';
+import {getLanguages} from "redux/modules/language";
 
 class BaseLayout extends React.Component {
 
     constructor(props) {
         super(props);
         this.toggleDrawer = this.toggleDrawer.bind(this);
+        this.props.getLanguages();
     }
 
     state = {
@@ -25,7 +36,12 @@ class BaseLayout extends React.Component {
     }
 
     render() {
-        const {classes, match} = this.props;
+        const {classes, match, languages} = this.props;
+
+        const contentPadding = () => ({
+            paddingLeft: this.state.drawerOpen ? drawerWidth : drawerClosed,
+            transition: '0.3s'
+        });
 
         return (
             <div className={classes.root}>
@@ -38,14 +54,26 @@ class BaseLayout extends React.Component {
                         push={this.props.push}
                     />
                     <MyDrawer toggleDrawer={this.toggleDrawer} drawerOpen={this.state.drawerOpen}/>
-                    <div className={classes.content}>
+                    <div style={contentPadding()} className={classes.content}>
+                        {languages.length !== 0 &&
                         <Switch>
-                            <Route exact path={`${match.url}/`} component={Home}/>
+                            < Route exact path={`${match.url}/`} component={Home}/>
+
                             <Route exact path={`${match.url}/cities`} component={Cities}/>
                             <Route exact path={`${match.url}/cities/create`} component={CitiesManage}/>
                             <Route exact path={`${match.url}/cities/:id`} component={CitiesManage}/>
+
+                            <Route exact path={`${match.url}/users`} component={Users}/>
+                            <Route exact path={`${match.url}/users/create`} component={UsersManage}/>
+                            <Route exact path={`${match.url}/users/:id`} component={UsersManage}/>
+
+                            <Route exact path={`${match.url}/properties`} component={Properties}/>
+                            <Route exact path={`${match.url}/properties/create`} component={PropertiesManage}/>
+                            <Route exact path={`${match.url}/properties/:id`} component={PropertiesManage}/>
+
                             <Route path={`${match.url}/settings`} component={Settings}/>
                         </Switch>
+                        }
                     </div>
                 </div>
             </div>
@@ -53,6 +81,8 @@ class BaseLayout extends React.Component {
     }
 }
 
+const drawerWidth = 240;
+const drawerClosed = 60;
 
 const styles = theme => ({
     appFrame: {
@@ -65,13 +95,11 @@ const styles = theme => ({
         width: '100%',
         height: '100%',
         zIndex: 1,
-        overflow: 'hidden',
     },
     content: {
         width: '100%',
         flexGrow: 1,
         backgroundColor: theme.palette.background.default,
-        padding: 24,
         height: 'calc(100% - 56px)',
         marginTop: 56,
         [theme.breakpoints.up('sm')]: {
@@ -83,12 +111,13 @@ const styles = theme => ({
 
 function mapStateToProps(state) {
     return {
-        loggedIn: state.auth.loggedIn
+        loggedIn: state.auth.loggedIn,
+        languages: state.language.languages
     }
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({logout, push}, dispatch)
+    return bindActionCreators({logout, getLanguages, push}, dispatch)
 }
 
 export default compose(

@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, FormHelperText, TextField, withStyles, withTheme, withWidth} from "material-ui";
 import {connect} from "react-redux";
 import {bindActionCreators, compose} from "redux";
-import {register} from "redux/modules/auth";
+import {register} from "redux/modules/auth/index";
 import {MyTextField} from 'components';
 import {AuthForm} from 'components';
 
@@ -97,7 +97,7 @@ const styles = theme => ({
 
 function mapStateToProps(state) {
     return {
-        errors: state.auth.errors
+        errors: state.auth.registerErrors
     }
 }
 

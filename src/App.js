@@ -13,7 +13,7 @@ import thunk from 'redux-thunk';
 import {routerMiddleware} from "react-router-redux";
 import createHistory from 'history/createBrowserHistory'
 import {getAuthData} from "services/auth";
-import {SET_USER_OBJECT} from "redux/modules/auth";
+import {SET_USER_OBJECT} from "redux/modules/auth/index";
 import AsyncMiddleware from 'redux/middlewares/AsyncMiddleware';
 
 const history = createHistory();
@@ -41,7 +41,7 @@ const PrivateRoute = ({component: Component, ...rest}) => (
 class App extends React.Component {
 
     render() {
-        const tokenData = getAuthData();;
+        const tokenData = getAuthData();
         if(tokenData.status === true) {
             store.dispatch({type: SET_USER_OBJECT, payload: tokenData})
         }

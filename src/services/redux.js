@@ -3,3 +3,7 @@ export const createAsyncConst = (name) => ({
     SUCCESS: `${name}_SUCCESS`,
     FAILED: `${name}_FAILED`,
 });
+
+export const createLanguageTranslations = (model) => ({
+
+});

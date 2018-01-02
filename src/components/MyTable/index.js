@@ -11,8 +11,15 @@ const styles = theme => ({
 });
 
 const MyTable = (props) => {
-    const {classes, columnData = [], rowData = [], onRowClicked} = props;
+    const {
+        classes,
+        columnData = [],
+        rowData = [],
+        onRowClicked,
+        normalized = false,
+    } = props;
 
+    const translationId = 1;
     const columnCells = columnData.map((col, i) => (
         <TableCell
             key={i}
@@ -21,6 +28,18 @@ const MyTable = (props) => {
             {col.label}
         </TableCell>
     ));
+
+    const translate = (row, column, translationId) => {
+        if(row.hasOwnProperty('translations')) {
+            if(row.translations.length !== 0) {
+                const translation = row.translations.find(translation => translation.languageId === translationId);
+                if(translation && translation.hasOwnProperty(column)) {
+                    return translation[column];
+                }
+            }
+        }
+            return row[column]
+    };
 
     const rowCells = (row, index) => {
         return columnData.map((col, i) => (

@@ -12,3 +12,8 @@ export {default as Right} from './Right/index';
 export {default as TopBar} from './TopBar/index';
 export {default as WithRoot} from './WithRoot/index';
 export {default as MyProgressBar} from './MyProgressBar/index';
+export {default as AlertButton} from './AlertButton/index';
+export {default as ModuleTitle} from './ModuleTitle/index';
+export {default as Languages} from './Languages/index';
+export {default as ModuleToolbar} from './ModuleToolbar/index';
+export {default as LanguageSelect} from './LanguageSelect/index';

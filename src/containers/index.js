@@ -5,3 +5,7 @@ export {default as Home} from './Home/index';
 export {default as Login} from './Login/index';
 export {default as Register} from './Register/index';
 export {default as Settings} from './Settings/index';
+export {default as Users} from './Users/index';
+export {default as UsersManage} from './Users/manage';
+export {default as Properties} from './Properties/index';
+export {default as PropertiesManage} from './Properties/manage';

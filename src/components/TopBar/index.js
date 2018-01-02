@@ -22,7 +22,7 @@ const TopBar = (props) => {
 
     const {classes, loggedIn, drawerOpen, toggleDrawer} = props;
     return (
-        <AppBar className={classNames(classes.appBar, drawerOpen && classes.appBarShift)}>
+        <AppBar position={'fixed'} className={classNames(classes.appBar, drawerOpen && classes.appBarShift)}>
             <Toolbar disableGutters={!drawerOpen}>
                 <IconButton
                     color="contrast"
@@ -58,7 +58,6 @@ const styles = theme => ({
     },
 
     appBar: {
-        position: 'absolute',
         zIndex: theme.zIndex.navDrawer + 1,
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,

@@ -3,7 +3,7 @@ import {AuthForm} from 'components';
 import {Button, TextField, withStyles, withTheme, withWidth} from "material-ui";
 import {connect} from "react-redux";
 import {bindActionCreators, compose} from "redux";
-import {login} from "redux/modules/auth";
+import {login} from "redux/modules/auth/index";
 
 class Login extends React.Component {
 
