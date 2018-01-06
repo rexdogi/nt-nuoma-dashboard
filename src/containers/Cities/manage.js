@@ -26,6 +26,8 @@ import {
     setTranslationField
 } from "redux/modules/city/index";
 
+import withTranslations from 'HOC/languageHOC';
+
 import {getLanguages} from "redux/modules/language";
 
 class CitiesManage extends React.Component {
@@ -181,4 +183,5 @@ export default compose(
     }),
     withTheme(),
     connect(mapStateToProps, mapDispatchToProps),
+    withTranslations
 )(CitiesManage)
