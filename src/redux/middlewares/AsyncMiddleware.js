@@ -1,5 +1,3 @@
-// @flow
-
 import {API_GET, API_POST, API_UPDATE, API_DELETE} from "redux/constants";
 import axios from 'axios';
 
@@ -32,7 +30,7 @@ const failed = (prefix) => ({
     [`${prefix}Failed`]: true
 });
 
-const apiMiddleware = ({dispatch, getState}: { dispatch: Function, getState: Function }) => (next: Function) => (action: Object) => {
+const apiMiddleware = ({dispatch, getState}) => next => action => {
 
     switch (action.type) {
         case API_GET:

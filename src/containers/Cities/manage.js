@@ -70,7 +70,7 @@ class CitiesManage extends React.Component {
     };
 
     render() {
-        const {classes, match, errors, failed, success, loading, city, languageId, translations} = this.props;
+        const {classes, match, errors, failed, success, loading, city, languageId, languages, t} = this.props;
 
         const translatableFields = () => {
            const translation = city.translations.find(t => t.language.id === languageId);
@@ -92,7 +92,7 @@ class CitiesManage extends React.Component {
         return (
             <div>
                 <ModuleToolbar
-                    title='Cities'
+                    title={t('cities')}
                 >
                    <LanguageSelect
                        value={languageId}
@@ -129,6 +129,32 @@ class CitiesManage extends React.Component {
         );
     }
 }
+
+
+{/*<Module>
+    <ModuleContent>
+        <div className={classes.contentRoot}>
+            {translatableFields()}
+        </div>
+    </ModuleContent>
+    <ModuleFooter>
+        <Button
+            disabled={loading}
+            color="primary"
+            raised
+            onClick={this.handleSubmit}
+        >
+            {match.params.id ? 'Update' : 'Create'}
+        </Button>
+        <Right>
+            {match.params.id &&
+            <AlertButton onClick={this.handleDestroy} disabled={loading} color="accent"
+                         raised>Delete</AlertButton>
+            }
+        </Right>
+    </ModuleFooter>
+    <MyProgressBar failed={failed} loading={loading} success={success}/>
+</Module>*/}
 
 const styles = theme => ({
     headerTitle: {
@@ -183,5 +209,5 @@ export default compose(
     }),
     withTheme(),
     connect(mapStateToProps, mapDispatchToProps),
-    withTranslations
+    withTranslations()
 )(CitiesManage)

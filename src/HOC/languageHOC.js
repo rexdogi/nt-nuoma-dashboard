@@ -1,15 +1,27 @@
 import * as React from 'react';
 
-export default function withTranslations(WrappedComponent, translations) {
-    // ...and returns another component...
+const withTranslations = language => WrappedComponent => {
+
+    const translations = {
+        ["city"]: {en: 'City', lt: 'Miestas'},
+        ["cities"]: {en: 'Cities', lt: 'Miestai'}
+    };
+
     return class extends React.Component {
         constructor(props) {
             super(props);
-            console.log(this);
+        }
+
+        t(keyword) {
+            console.log(translations);
+            console.log(translations[keyword]);
+            return translations[keyword][language]
         }
 
         render() {
-            return <WrappedComponent {...this.props} />;
+            return <WrappedComponent t={this.t} {...this.props} />;
         }
     };
-}
+};
+
+export default withTranslations;

@@ -62,16 +62,7 @@ export default function reducer(state = initialState, action) {
         case EDIT_CITY.PENDING:
             return {...state, ...action.asyncStatus};
         case EDIT_CITY.SUCCESS:
-            const norm = normalize(action.data.data, schema.city);
-            console.log(norm);
-            const de = denormalize(norm.result, schema.city, norm.entities);
-            console.log(de);
-            return {
-                ...state,
-                manageLoading: false,
-                city: action.data.data,
-                entities: norm.entities
-            };
+            return {...state, manageLoading: false, city: action.data.data,};
         case EDIT_CITY.FAILED:
             return {...state, ...action.asyncStatus};
 
