@@ -83,11 +83,11 @@ function mapStateToProps(state) {
         cities: state.city.cities,
         cityKeys: state.city.result,
         translations: state.city.entities.translations
-    }
+    };
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({push, getCities}, dispatch)
+    return bindActionCreators({push, getCities}, dispatch);
 }
 
 export default compose(
@@ -96,4 +96,4 @@ export default compose(
     }),
     withTheme(),
     connect(mapStateToProps, mapDispatchToProps),
-)(Cities)
+)(Cities);

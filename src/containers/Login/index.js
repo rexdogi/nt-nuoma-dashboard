@@ -4,6 +4,7 @@ import {Button, TextField, withStyles, withTheme, withWidth} from "material-ui";
 import {connect} from "react-redux";
 import {bindActionCreators, compose} from "redux";
 import {login} from "redux/modules/auth/index";
+import {push} from 'react-router-redux';
 
 class Login extends React.Component {
 
@@ -53,6 +54,15 @@ class Login extends React.Component {
                         className={classes.button}>
                         Login
                     </Button>
+
+                    <Button
+                        style={{marginTop: 20}}
+                        onClick={() => this.props.push('/register')}
+                        raised
+                        color="primary"
+                        className={classes.button}>
+                        Or Sign up
+                    </Button>
                 </form>
             </AuthForm>
         );
@@ -78,7 +88,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({login}, dispatch)
+    return bindActionCreators({login, push}, dispatch)
 }
 
 export default compose(

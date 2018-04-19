@@ -12,15 +12,8 @@ import InboxIcon from 'material-ui-icons/Inbox';
 import {push} from 'react-router-redux';
 import {connect} from "react-redux";
 
-type Props = {
-    classes: Object,
-    theme: Object,
-    drawerOpen: boolean,
-    toggleDrawer: boolean,
-    push: Function
-}
 
-class MyDrawer extends React.Component<Props> {
+class MyDrawer extends React.Component {
 
     render() {
         const {classes, theme, drawerOpen, toggleDrawer} = this.props;
@@ -52,13 +45,6 @@ class MyDrawer extends React.Component<Props> {
                                 <InboxIcon />
                             </ListItemIcon>
                             <ListItemText primary="Cities" />
-                        </ListItem>
-
-                        <ListItem button onClick={() => this.props.push('/dashboard/settings')}>
-                            <ListItemIcon>
-                                <InboxIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Settings" />
                         </ListItem>
 
                         <ListItem button onClick={() => this.props.push('/dashboard/users')}>

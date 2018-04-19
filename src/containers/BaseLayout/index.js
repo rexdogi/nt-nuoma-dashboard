@@ -126,4 +126,4 @@ export default compose(
     }),
     withWidth(),
     connect(mapStateToProps, mapDispatchToProps)
-)(BaseLayout)
+)(BaseLayout);

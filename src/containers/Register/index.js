@@ -5,6 +5,8 @@ import {bindActionCreators, compose} from "redux";
 import {register} from "redux/modules/auth/index";
 import {MyTextField} from 'components';
 import {AuthForm} from 'components';
+import {push} from 'react-router-redux';
+
 
 class Register extends React.Component {
 
@@ -75,6 +77,15 @@ class Register extends React.Component {
                         Sign Up
                     </Button>
 
+                    <Button
+                        style={{marginTop: 20}}
+                        onClick={() => this.props.push('/login')}
+                        raised
+                        color="primary"
+                        className={classes.button}>
+                        Or Login
+                    </Button>
+
                 </form>
             </AuthForm>
         );
@@ -102,7 +113,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({register}, dispatch)
+    return bindActionCreators({register, push}, dispatch)
 }
 
 export default compose(
